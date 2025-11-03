@@ -1,4 +1,12 @@
 .env
 
+# Data directory (ML/VLA artifacts)
 /data
 
+# ROS2 build artifacts
+/build
+/install
+/log
+
+# IDE
+/.vscode

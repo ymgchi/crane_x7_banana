@@ -4,7 +4,10 @@
 
 ## 概要
 
-整理整頓
+このリポジトリは [NOPLAB/crane_x7_vla](https://github.com/NOPLAB/crane_x7_vla) をベースに、VLA/機械学習関連の機能を削除し、CRANE-X7 ロボットアームの基本制御に特化したものです。
+
+元リポジトリ製作者: NOPLAB  
+ライセンス: MIT License
 
 ## 必須
 
