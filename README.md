@@ -17,7 +17,8 @@
 ## リポジトリのクローン
 
 ```bash
-
+git clone --recursive https://github.com/ymgchi/crane_x7_banana.git
+cd crane_x7_banana
 ```
 
 ## 実行
