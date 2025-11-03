@@ -4,7 +4,7 @@
 
 ## 概要
 
-VLAを使ってマニュピレータを制御する。
+整理整頓
 
 ## 必須
 
@@ -14,7 +14,7 @@ VLAを使ってマニュピレータを制御する。
 ## リポジトリのクローン
 
 ```bash
-git clone --recursive https://github.com/NOPLAB/crane_x7_vla
+
 ```
 
 ## 実行
@@ -35,6 +35,7 @@ docker compose --profile real up
 
 シミュレータ(Gazebo)の場合
 ```bash
+xhost +
 docker compose --profile sim up
 ```
 
@@ -42,13 +43,18 @@ docker compose --profile sim up
 
 ### Docker
 
-1. ビルド
+1.許可
+```bash
+xhost +
+```
+
+2. ビルド
 
 ```bash
 ./scripts/build.sh
 ```
 
-2. 実行
+3. 実行
 
 実機で実行
 ```bash

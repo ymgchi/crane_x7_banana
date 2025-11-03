@@ -16,7 +16,7 @@ services:
         target: "/tmp/.X11-unix"
     devices:
       - "$USB_DEVICE:/dev/ttyUSB0"
-    command: ros2 launch crane_x7_log demo_with_logger.launch.py
+    command: ros2 launch crane_x7_examples example.launch.py
 
   crane_x7_ros2_sim:
     profiles:
@@ -33,5 +33,5 @@ services:
       - type: bind
         source: "/tmp/.X11-unix"
         target: "/tmp/.X11-unix"
-    command: /workspace/scripts/docker/entrypoint.sh ros2 launch crane_x7_log demo_with_logger.launch.py
+    command: /workspace/scripts/docker/entrypoint.sh ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py use_sim_time:=true
 
