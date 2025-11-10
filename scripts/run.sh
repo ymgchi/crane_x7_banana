@@ -26,6 +26,7 @@ docker run \
     --name=$DOCKER_CONTAINER_NAME \
     --rm \
     -it \
+    --device=/dev/ttyUSB0:/dev/ttyUSB0 \
     $DOCKER_OPTION \
     $DOCKER_IMAGE_NAME \
     /bin/bash

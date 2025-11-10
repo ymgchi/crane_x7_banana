@@ -16,7 +16,7 @@ services:
         target: "/tmp/.X11-unix"
     devices:
       - "$USB_DEVICE:/dev/ttyUSB0"
-    command: ros2 launch crane_x7_examples example.launch.py
+    command: ros2 launch crane_x7_examples demo.launch.py port_name:=${USB_DEVICE}
 
   crane_x7_ros2_sim:
     profiles:
