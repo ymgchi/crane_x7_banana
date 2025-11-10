@@ -11,6 +11,14 @@
 **用途**: ロボット設計制作論実習3  
 **ライセンス**: MIT License (詳細は下部の「ライセンスと著作権」セクションを参照)
 
+### 使用しているサブモジュール
+
+このリポジトリは以下の外部パッケージをGitサブモジュールとして使用しています:
+
+- **crane_x7_ros**: [NOPLAB/crane_x7_ros](https://github.com/NOPLAB/crane_x7_ros) (Apache License 2.0)
+  - RT-net公式版ではGazeboシミュレーターでエラーが発生するため、NOPLABのフォーク版を使用
+- **crane_x7_description**: [rt-net/crane_x7_description](https://github.com/rt-net/crane_x7_description) (NON-COMMERCIAL LICENSE)
+
 ## 必要環境
 
 - **Native Linux** (Ubuntu 22.04 推奨)
