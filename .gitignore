@@ -8,5 +8,10 @@
 /install
 /log
 
+# Log files
+*.log
+*.log.*
+logs/
+
 # IDE
 /.vscode
