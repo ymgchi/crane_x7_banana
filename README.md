@@ -6,8 +6,10 @@
 
 このリポジトリは [NOPLAB/crane_x7_vla](https://github.com/NOPLAB/crane_x7_vla) をベースに、VLA/機械学習関連の機能を削除し、CRANE-X7 ロボットアームの基本制御に特化したものです。
 
-- **元リポジトリ製作者**: NOPLAB  
-- **ライセンス**: MIT License
+**開発者**: ymgchi  
+**所属**: 未来ロボティクス学科  
+**用途**: ロボット設計制作論実習3  
+**ライセンス**: MIT License (詳細は下部の「ライセンスと著作権」セクションを参照)
 
 ## 必要環境
 
@@ -24,7 +26,18 @@ git clone --recursive https://github.com/ymgchi/crane_x7_banana.git
 cd crane_x7_banana
 ```
 
-### 2. 実行方法
+### 2. 環境変数ファイルの作成
+
+```bash
+# .env.template をコピーして .env を作成
+cp .env.template .env
+
+# 必要に応じて編集（通常はそのままでOK）
+# USB_DEVICE=/dev/ttyUSB0  # 実機のUSBデバイスパス
+# DISPLAY=:0               # シミュレーター用のディスプレイ設定
+```
+
+### 3. 実行方法
 
 #### 実機で実行する場合
 
@@ -199,10 +212,34 @@ xhost +
 
 ## 参考情報
 
-### RT
+### CRANE-X7 関連
 
 - https://github.com/rt-net/crane_x7
 - https://github.com/rt-net/crane_x7_ros
 - https://github.com/rt-net/crane_x7_Hardware
 - https://github.com/rt-net/crane_x7_samples
+
+## ライセンスと著作権
+
+### このリポジトリ
+
+- **著作権**: Copyright (c) 2025 ymgchi
+- **ライセンス**: MIT License
+- **文責**: ymgchi
+
+### 元リポジトリ
+
+このプロジェクトは [NOPLAB/crane_x7_vla](https://github.com/NOPLAB/crane_x7_vla) をベースにしています。
+
+- **元リポジトリ著作権**: Copyright (c) 2025 nop (NOPLAB)
+- **元リポジトリライセンス**: MIT License
+
+### CRANE-X7 ハードウェア・ソフトウェア
+
+CRANE-X7 ロボットアームおよび関連するROS2パッケージは株式会社アールティが開発・提供しています。
+
+- **CRANE-X7 関連パッケージ著作権**: Copyright 2022 RT Corporation
+- **ライセンス**: Apache License 2.0
+
+詳細は各パッケージの LICENSE ファイルを参照してください。
 
