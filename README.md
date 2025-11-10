@@ -149,7 +149,7 @@ ros2 launch crane_x7_examples example.launch.py example:='gripper_control'
 
 ```bash
 # 実行中のコンテナに接続
-docker exec -it ros-dev /bin/bash
+docker exec -it ros-dev-banana /bin/bash
 
 # 環境変数を読み込む
 source /workspace/ros2/install/setup.bash

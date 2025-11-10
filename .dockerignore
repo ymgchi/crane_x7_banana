@@ -1,1 +1,23 @@
+# Git関連
+.git/
+.gitignore
+.gitmodules
 
+# ログファイル
+*.log
+logs/
+
+# ビルド成果物
+ros2/build/
+ros2/install/
+ros2/log/
+
+# IDE
+.vscode/
+
+# 環境設定
+.env
+
+# ドキュメント
+README.md
+LICENSE

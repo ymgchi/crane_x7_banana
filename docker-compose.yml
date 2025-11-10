@@ -1,5 +1,6 @@
 services:
   crane_x7_ros2_real:
+    container_name: ros-dev-banana
     profiles:
       - real
     env_file: .env
@@ -19,6 +20,7 @@ services:
     command: bash -c "source /workspace/ros2/install/setup.bash && ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0"
 
   crane_x7_ros2_sim:
+    container_name: ros-dev-banana
     profiles:
       - sim
     env_file: .env
