@@ -24,25 +24,31 @@ git clone --recursive https://github.com/ymgchi/crane_x7_banana.git
 cd crane_x7_banana
 ```
 
-### 2. Dockerイメージのビルド
-
-```bash
-./scripts/build.sh
-```
-
-### 3. 実行方法
+### 2. 実行方法
 
 #### 実機で実行する場合
+
+**簡単な方法（推奨）:**
 
 ```bash
 # USB デバイスの権限設定
 sudo chmod 666 /dev/ttyUSB0
 
-# Docker Compose で自動起動（推奨）
-docker compose --profile real up
+# ビルド＆起動を一発で実行
+./scripts/run_real.sh
 ```
 
-または、開発用に手動で起動:
+**または Docker Compose を直接使用:**
+
+```bash
+# USB デバイスの権限設定
+sudo chmod 666 /dev/ttyUSB0
+
+# ビルドして起動
+docker compose --profile real up --build
+```
+
+**開発用に手動で起動:**
 
 ```bash
 # コンテナに入る
@@ -57,12 +63,21 @@ ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0
 
 #### シミュレーター（Gazebo）で実行する場合
 
+**簡単な方法（推奨）:**
+
+```bash
+# ビルド＆起動を一発で実行
+./scripts/run_sim.sh
+```
+
+**または Docker Compose を直接使用:**
+
 ```bash
 # X11 の権限設定
 xhost +
 
-# Docker Compose で起動
-docker compose --profile sim up
+# ビルドして起動
+docker compose --profile sim up --build
 ```
 
 ## 開発ガイド

@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: base
+      target: built
     volumes:
       - type: bind
         source: "."
@@ -16,7 +16,7 @@ services:
         target: "/tmp/.X11-unix"
     devices:
       - "$USB_DEVICE:/dev/ttyUSB0"
-    command: ros2 launch crane_x7_examples demo.launch.py port_name:=${USB_DEVICE}
+    command: bash -c "source /workspace/ros2/install/setup.bash && ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0"
 
   crane_x7_ros2_sim:
     profiles:
@@ -25,7 +25,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: base
+      target: built
     volumes:
       - type: bind
         source: "."
@@ -33,5 +33,5 @@ services:
       - type: bind
         source: "/tmp/.X11-unix"
         target: "/tmp/.X11-unix"
-    command: /workspace/scripts/docker/entrypoint.sh ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py use_sim_time:=true
+    command: bash -c "source /workspace/ros2/install/setup.bash && ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py use_sim_time:=true"
 

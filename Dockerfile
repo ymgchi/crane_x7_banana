@@ -19,6 +19,14 @@ RUN cd /tmp/ros2_dependencies && \
 RUN mkdir /workspace
 WORKDIR /workspace
 
+# Build ROS2 workspace
+FROM base AS built
+COPY ros2 /workspace/ros2
+RUN . /opt/ros/humble/setup.sh && \
+    cd /workspace/ros2 && \
+    colcon build --symlink-install && \
+    rm -rf build log
+
 FROM base AS dev
 
 RUN apt-get update && apt install -y --no-install-recommends \
