@@ -145,6 +145,133 @@ ros2 launch crane_x7_examples example.launch.py example:='gripper_control'
 - `pick_and_place` - ピック＆プレース動作
 - `cartesian_path` - デカルト空間での軌道追従
 
+### バナナ仕分けデモ
+
+#### 概要
+
+バナナ仕分けデモは、CRANE-X7ロボットアームを使用して物体を固定位置から3箇所に自動仕分けするプログラムです。MoveItを使用した軌道計画とグリッパー制御を組み合わせることで、ピック＆プレース動作を実現しています。
+
+**特徴:**
+- 固定位置の物体を3箇所（右・中央・左）に順次配置
+- デカルト空間での直線軌道生成（Cartesian Path Planning）
+- 安全性を考慮した速度・加速度制限（30%）
+- Gazeboシミュレーターでの物体位置自動リセット機能
+
+#### ファイル構成
+
+- **実行ファイル**: `ros2/src/crane_x7_ros/crane_x7_examples/src/banana.cpp`
+  - C++で実装されたメインプログラム
+  - MoveItの`MoveGroupInterface`を使用してアームとグリッパーを制御
+  - 328行のコードで包括的な制御フローを実装
+
+- **起動ファイル**: `ros2/src/crane_x7_ros/crane_x7_examples/launch/banana.launch.py`
+  - ROS2のLaunchファイル
+  - ロボットの記述情報とMoveIt設定を読み込み
+  - `use_sim_time`パラメータでシミュレーション/実機の切り替えが可能
+
+#### 実行方法
+
+##### シミュレーター（Gazebo）で実行
+
+**方法1: 別ターミナルから実行（推奨）**
+
+```bash
+# ターミナル1: Gazeboシミュレーターを起動
+./scripts/run_sim.sh
+
+# ターミナル2: バナナ仕分けデモを実行
+docker exec -it ros-dev-banana /bin/bash
+source /workspace/ros2/install/setup.bash
+ros2 launch crane_x7_examples banana.launch.py
+```
+
+**方法2: コンテナ内で実行**
+
+```bash
+# コンテナに入る
+./scripts/run.sh
+
+# ビルド
+cd /workspace/ros2
+colcon build --symlink-install
+source install/setup.bash
+
+# Gazeboを起動（別ターミナルまたはバックグラウンドで）
+ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py
+
+# バナナデモを実行
+ros2 launch crane_x7_examples banana.launch.py use_sim_time:=true
+```
+
+##### 実機で実行（オプション）
+
+```bash
+# 実機を接続してコンテナに入る
+./scripts/run_real.sh
+
+# コンテナ内で
+cd /workspace/ros2
+source install/setup.bash
+ros2 launch crane_x7_examples banana.launch.py use_sim_time:=false port_name:=/dev/ttyUSB0
+```
+
+**注意**: 実機で実行する場合は、周囲の安全を確認し、物体の位置を適切に配置してください。
+
+#### 動作フロー
+
+各タスク（3回繰り返し）で以下のステップを実行します:
+
+1. **グリッパーを開く** - 物体を掴む準備
+2. **ピック上方位置へ移動** - 物体の上に移動
+3. **下降してピック位置へ** - 直線軌道で下降
+4. **グリッパーを閉じる** - 物体を掴む
+5. **上昇** - 物体を持ち上げる
+6. **配置上方位置へ移動** - 目標位置の上に移動
+7. **下降して配置位置へ** - 直線軌道で下降
+8. **グリッパーを開く** - 物体を離す
+9. **上昇** - 配置位置から離れる
+10. **ホーム位置へ戻る** - 初期位置に戻る
+11. **物体位置リセット** - 次のタスクのため物体を元の位置に戻す（Gazeboのみ）
+
+#### カスタマイズ
+
+`banana.cpp`内の座標を変更することで、ピック＆プレース位置を調整できます:
+
+```cpp
+// 各位置の定義（X, Y, Z, Roll, Pitch, Yaw）
+auto pick_pose = createPose(0.2, 0.0, 0.13, -180, 0, -90);           // ピック位置
+auto place_pose_1 = createPose(0.2, 0.15, 0.13, -180, 0, -90);      // 配置位置1（右）
+auto place_pose_2 = createPose(0.2, 0.0, 0.13, -180, 0, -90);       // 配置位置2（中央）
+auto place_pose_3 = createPose(0.2, -0.15, 0.13, -180, 0, -90);     // 配置位置3（左）
+```
+
+また、速度やタイミングも調整可能です:
+
+```cpp
+move_group_arm.setMaxVelocityScalingFactor(0.3);      // 速度スケール（0.1-1.0）
+move_group_arm.setMaxAccelerationScalingFactor(0.3);  // 加速度スケール（0.1-1.0）
+```
+
+#### トラブルシューティング
+
+**プログラムが起動しない場合:**
+
+```bash
+# パッケージを再ビルド
+cd /workspace/ros2
+colcon build --packages-select crane_x7_examples --symlink-install
+source install/setup.bash
+```
+
+**動作が不安定な場合:**
+- 速度・加速度のスケーリングファクターを下げる（現在30%）
+- 物体の位置や重さを確認
+- MoveItの計画失敗メッセージを確認
+
+**Gazeboで物体がリセットされない場合:**
+- Gazeboのサービスが起動しているか確認: `ros2 service list | grep set_entity_state`
+- 物体の名前が`target_object`と一致しているか確認
+
 ### 別ターミナルでコンテナに接続
 
 ```bash
@@ -167,13 +294,16 @@ crane_x7_banana/
 ├── .env                        # 環境変数設定
 ├── scripts/
 │   ├── build.sh               # ビルドスクリプト
-│   └── run.sh                 # 実行スクリプト
+│   ├── run.sh                 # 実行スクリプト
+│   ├── run_real.sh            # 実機用起動スクリプト
+│   └── run_sim.sh             # シミュレーター用起動スクリプト
 └── ros2/
     └── src/
         ├── crane_x7_description/   # ロボットモデル定義
         └── crane_x7_ros/           # 制御パッケージ
+            ├── crane_x7/
             ├── crane_x7_control/   # ハードウェア制御
-            ├── crane_x7_examples/  # サンプルプログラム
+            ├── crane_x7_examples/  # サンプルプログラム（banana.cppを含む）
             ├── crane_x7_gazebo/    # シミュレーター設定
             └── crane_x7_moveit_config/  # MoveIt設定
 ```

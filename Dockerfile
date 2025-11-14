@@ -6,7 +6,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y && \
     rosdep update && \
     apt install -y --no-install-recommends \
-    xserver-xorg
+    xserver-xorg \
+    python3-pip
+
+# Install MoveIt related packages
+RUN apt-get install -y --no-install-recommends \
+    ros-humble-moveit \
+    ros-humble-gazebo-msgs
 
 # Install dependencies
 RUN mkdir -p /tmp/ros2_dependencies/src
@@ -25,7 +31,7 @@ COPY ros2 /workspace/ros2
 RUN . /opt/ros/humble/setup.sh && \
     cd /workspace/ros2 && \
     colcon build --symlink-install && \
-    rm -rf build log
+    rm -rf log
 
 FROM base AS dev
 
