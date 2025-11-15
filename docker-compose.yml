@@ -4,6 +4,11 @@ services:
     profiles:
       - real
     env_file: .env
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,6 +22,13 @@ services:
         target: "/tmp/.X11-unix"
     devices:
       - "$USB_DEVICE:/dev/ttyUSB0"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     command: bash -c "cd /workspace/ros2 && if [ ! -d install ]; then source /opt/ros/humble/setup.bash && colcon build --symlink-install; fi && source /workspace/ros2/install/setup.bash && ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0"
 
   crane_x7_ros2_sim:
@@ -24,6 +36,16 @@ services:
     profiles:
       - sim
     env_file: .env
+    network_mode: host
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - __GLX_VENDOR_LIBRARY_NAME=nvidia
+      - __NV_PRIME_RENDER_OFFLOAD=1
+      - __VK_LAYER_NV_optimus=NVIDIA_only
+      - VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
     build:
       context: .
       dockerfile: Dockerfile
@@ -35,5 +57,20 @@ services:
       - type: bind
         source: "/tmp/.X11-unix"
         target: "/tmp/.X11-unix"
+      - type: bind
+        source: "/dev/dri"
+        target: "/dev/dri"
+    devices:
+      - /dev/dri/card1:/dev/dri/card1
+      - /dev/dri/card2:/dev/dri/card2
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/renderD129:/dev/dri/renderD129
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     command: bash -c "cd /workspace/ros2 && if [ ! -d install ]; then source /opt/ros/humble/setup.bash && colcon build --symlink-install; fi && source /workspace/ros2/install/setup.bash && ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py use_sim_time:=true"
 
