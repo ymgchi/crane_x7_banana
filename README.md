@@ -16,7 +16,7 @@
 CRANE-X7ロボットアームを使用したピック&プレース動作のデモンストレーションです。
 物体を固定位置から3箇所（右・中央・左）に順次配置する動作を自動で実行します。
 
-**開発者**: ymgchi  
+**開発者**: ymgchi  Nekomaru　TomiKazu-git 
 **所属**: 未来ロボティクス学科  
 **ライセンス**: MIT License
 
@@ -36,7 +36,7 @@ CRANE-X7ロボットアームを使用したピック&プレース動作のデ�
 ## 動作環境
 
 - Ubuntu 22.04
-- Docker Engine 20.10+
+- Docker 
 - NVIDIA GPU (推奨)
 
 ## セットアップ
@@ -129,7 +129,6 @@ crane_x7_examples/
 7. 下降して配置
 8. グリッパーを開く
 9. 上昇してホーム位置へ
-10. 物体を初期位置にリセット（Gazeboのみ）
 
 **配置座標:**
 - タスク1: (0.2, 0.15, 0.13) 右側
@@ -179,9 +178,6 @@ move_group_arm.move();
 - リポジトリ: [rt-net/crane_x7_description](https://github.com/rt-net/crane_x7_description)
 
 ---
-
-**開発者**: ymgchi  
-**更新日**: 2025年11月17日
 move_group_arm.setMaxAccelerationScalingFactor(0.3);  // 加速度スケール（0.1-1.0）
 ```
 
@@ -569,50 +565,6 @@ ros2 topic hz /joint_states
 # ログを確認
 ros2 run rqt_console rqt_console
 ```
-
-### デバッグテクニック
-
-#### 詳細ログの有効化
-
-```bash
-# より詳細なログを出力
-ros2 launch crane_x7_examples banana.launch.py --log-level debug
-
-# 特定のノードのみログ出力
-ros2 run crane_x7_examples banana --ros-args --log-level debug
-```
-
-#### ROS2ツールの活用
-
-```bash
-# ノードの情報を表示
-ros2 node info /banana_sorting_node
-
-# トピックの型を確認
-ros2 topic info /joint_states
-
-# サービスの呼び出し
-ros2 service call /get_planning_scene moveit_msgs/srv/GetPlanningScene "{}"
-
-# パラメータの確認
-ros2 param list
-ros2 param get /move_group robot_description
-```
-
-### よくある質問（FAQ）
-
-**Q: Dockerなしで実行できますか？**  
-A: はい。ただし、ROS 2 Humble、MoveIt、Gazebo等の依存関係を手動でインストールする必要があります。
-
-**Q: Windows/macOSで動きますか？**  
-A: Dockerは動作しますが、実機接続とGUI表示に追加設定が必要です。WSL2推奨。
-
-**Q: 他のロボットアームでも使えますか？**  
-A: URDFとMoveIt設定を変更すれば可能ですが、CRANE-X7専用に最適化されています。
-
-**Q: 商用利用は可能ですか？**  
-A: MITライセンスなので可能ですが、crane_x7_descriptionは非商用ライセンスです。詳細は各ライセンスを確認してください。
-
 ## 環境変数設定
 
 `.env` ファイルで以下の変数を設定できます:
@@ -721,14 +673,8 @@ CRANE-X7 ロボットアームおよび関連するROS 2パッケージは株式
 | crane_x7_hardware | ハードウェア情報 | https://github.com/rt-net/crane_x7_Hardware |
 | crane_x7_samples | Pythonサンプル集 | https://github.com/rt-net/crane_x7_samples |
 
-### コミュニティとサポート
-
-- **RT-net フォーラム**: 製品サポートページ参照
-- **ROS Answers**: https://answers.ros.org/
-- **Stack Overflow**: タグ `ros2`, `moveit`, `gazebo`
-
 ---
 
-**Last Updated**: 2025年11月15日  
+**Last Updated**: 2025年11月17日  
 **Version**: 1.0  
 **Author**: ymgchi
