@@ -29,9 +29,12 @@ CRANE-X7 ロボットアームを使用したピック&プレース動作のデ�
 
 ### 使用パッケージ
 
+注意: 本プロジェクトでは一部のパッケージをリポジトリ内に含め（フォークしてソースを配置）、一部を外部リポジトリとしてサブモジュールで参照しています。リポジトリをクローンする際はサブモジュールを含めて取得してください（`git clone --recursive` または `git submodule update --init --recursive`）。
+
 - **crane_x7_ros**: [ymgchi/crane_x7_ros](https://github.com/ymgchi/crane_x7_ros) (Apache License 2.0)
-  - NOPLAB 版をフォークし、banana sorting demo を追加
+  - 本リポジトリ内にフォークされたソースを含んでいます（パス: `ros2/src/crane_x7_ros`）。ローカルで編集・ビルド可能です。
 - **crane_x7_description**: [rt-net/crane_x7_description](https://github.com/rt-net/crane_x7_description) (NON-COMMERCIAL LICENSE)
+  - ロボットモデルを提供する外部リポジトリを Git サブモジュールとして参照しています。サブモジュールを取得する必要があり、該当パッケージ固有のライセンス条件が適用されます。
 
 ## 動作環境
 
