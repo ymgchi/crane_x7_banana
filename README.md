@@ -11,6 +11,7 @@
 - [バナナ仕分けデモ](#バナナ仕分けデモ)
 - [開発ガイド](#開発ガイド)
 - [プロジェクト構造](#プロジェクト構造)
+- [サブモジュールの管理](#サブモジュールの管理)
 - [トラブルシューティング](#トラブルシューティング)
 - [ライセンスと著作権](#ライセンスと著作権)
 - [参考情報](#参考情報)
@@ -500,6 +501,211 @@ crane_x7_banana/
 - `ros2/src/crane_x7_ros/crane_x7_examples/`: カスタムプログラムの追加先
 - `docker-compose.yml`: 実機/シミュレーターの切り替え設定
 - `scripts/`: よく使う操作を簡単に実行
+
+## サブモジュールの管理
+
+このプロジェクトはGitサブモジュールを使用しています。サブモジュール内のファイル（`banana.cpp`など）を変更した場合の管理方法を説明します。
+
+### 🔍 現在の状況
+
+`crane_x7_ros`と`crane_x7_description`はサブモジュールとして外部リポジトリを参照しています：
+
+```bash
+# サブモジュールの確認
+cat .gitmodules
+```
+
+### 選択肢1：サブモジュールの変更を無視【推奨・簡単】
+
+サブモジュール内の変更（`banana.cpp`など）をGit管理から除外する方法：
+
+```bash
+# サブモジュールの変更を無視する設定
+git config submodule.ros2/src/crane_x7_ros.ignore dirty
+
+# 確認（"modified: ros2/src/crane_x7_ros" が表示されなくなる）
+git status
+```
+
+**メリット**:
+- ✅ 設定が簡単（1コマンドで完了）
+- ✅ `git status`が常にクリーン
+- ✅ サブモジュールの更新が楽
+
+**デメリット**:
+- ❌ `banana.cpp`などの変更がGitHubにバックアップされない
+- ❌ 他の環境で同期できない
+
+**この方法が向いている人**: 
+- 個人開発で、ローカルだけで動けばOK
+- サブモジュールの元リポジトリを変更したくない
+
+### 選択肢2：サブモジュールをフォークして管理【完全管理】
+
+自分のGitHubアカウントにサブモジュールをフォークして、完全に管理する方法：
+
+#### ステップ1: GitHubでフォークを作成
+
+1. https://github.com/NOPLAB/crane_x7_ros にアクセス
+2. 右上の「Fork」ボタンをクリック
+3. 自分のアカウントにフォークを作成
+
+#### ステップ2: サブモジュールを自分のフォークに変更
+
+```bash
+cd ~/dev/my-crane-x7-project
+
+# サブモジュール内に移動
+cd ros2/src/crane_x7_ros
+
+# 現在のリモートを確認
+git remote -v
+
+# 自分のフォークをリモートとして追加
+git remote add myfork https://github.com/ymgchi/crane_x7_ros.git
+
+# 新しいブランチを作成
+git checkout -b my-banana-changes
+
+# 変更をコミット
+git add .
+git commit -m "Add banana.cpp and custom modifications"
+
+# 自分のフォークにプッシュ
+git push myfork my-banana-changes
+
+# 親リポジトリに戻る
+cd ~/dev/my-crane-x7-project
+```
+
+#### ステップ3: .gitmodulesを更新
+
+```bash
+# .gitmodulesを編集（テキストエディタで開く）
+nano .gitmodules
+```
+
+以下のように変更:
+```ini
+[submodule "ros2/src/crane_x7_ros"]
+	path = ros2/src/crane_x7_ros
+	url = https://github.com/ymgchi/crane_x7_ros.git  # 自分のフォークに変更
+	branch = my-banana-changes  # 自分のブランチに変更
+```
+
+#### ステップ4: サブモジュールの参照を更新
+
+```bash
+# サブモジュールの設定を同期
+git submodule sync
+
+# サブモジュールを更新
+git submodule update --remote --merge
+
+# 変更をコミット
+git add .gitmodules ros2/src/crane_x7_ros
+git commit -m "Update submodule to use my fork"
+git push
+```
+
+**メリット**:
+- ✅ すべての変更がGitHubにバックアップされる
+- ✅ 他の環境でも同じ状態を再現可能
+- ✅ 変更履歴が管理される
+
+**デメリット**:
+- ❌ 設定が少し複雑
+- ❌ 元のNOPLABリポジトリの更新を取り込むのに手間がかかる
+
+**この方法が向いている人**:
+- チームで開発している
+- 複数のマシンで同じコードを使いたい
+- 変更履歴をしっかり管理したい
+
+### 選択肢3：サブモジュールを通常のディレクトリに変換【中間案】
+
+サブモジュールを解除して、通常のファイルとして管理する方法：
+
+```bash
+cd ~/dev/my-crane-x7-project
+
+# サブモジュールの登録を解除
+git submodule deinit -f ros2/src/crane_x7_ros
+git rm -f ros2/src/crane_x7_ros
+
+# .git/modulesから削除
+rm -rf .git/modules/ros2/src/crane_x7_ros
+
+# 通常のディレクトリとしてコピー（バックアップから復元）
+# または、元のリポジトリを通常のcloneとして追加
+cd ros2/src
+git clone https://github.com/NOPLAB/crane_x7_ros.git
+rm -rf crane_x7_ros/.git  # Gitディレクトリを削除
+
+# 親リポジトリに追加
+cd ~/dev/my-crane-x7-project
+git add ros2/src/crane_x7_ros
+git commit -m "Convert crane_x7_ros from submodule to regular directory"
+git push
+```
+
+**メリット**:
+- ✅ すべてのファイルが1つのリポジトリで管理される
+- ✅ 設定が簡単、サブモジュールの複雑さがない
+
+**デメリット**:
+- ❌ 元のリポジトリの更新を取り込むのが困難
+- ❌ リポジトリサイズが大きくなる
+- ⚠️ ライセンス上の注意が必要（派生物として明記）
+
+### 🎯 推奨：どれを選ぶべきか
+
+| 状況 | 推奨方法 | 理由 |
+|------|---------|------|
+| 個人学習・実習用 | **選択肢1（無視）** | 最もシンプル、十分に機能する |
+| 複数環境で使用 | **選択肢2（フォーク）** | 変更が同期される |
+| チーム開発 | **選択肢2（フォーク）** | 共同作業が可能 |
+| 元リポジトリと無関係に開発 | **選択肢3（通常化）** | 独立して管理 |
+
+**あなたの場合（実習用）**: **選択肢1**が最適です！
+
+```bash
+# これだけ実行すればOK！
+git config submodule.ros2/src/crane_x7_ros.ignore dirty
+git status  # クリーンになっているはず
+```
+
+### 📝 補足：banana.cppはサブモジュール内でも動作します
+
+**Q: banana.cppはサブモジュール内の位置でないと動かない？**
+
+**A: はい、その場所でないと動きません。** 理由：
+
+1. **ビルドシステムの参照**: `CMakeLists.txt`が`ros2/src/crane_x7_ros/crane_x7_examples/src/`を参照
+2. **パッケージ構造**: ROS 2のパッケージ構造に従っている
+3. **依存関係**: 同じパッケージ内の他のファイルに依存
+
+**でも大丈夫！** サブモジュール内のファイルを変更しても問題なく動作します。Git管理の問題だけです。
+
+### 🔧 実際の作業フロー（選択肢1を選んだ場合）
+
+```bash
+# 1. サブモジュールの変更を無視する設定（1回だけ）
+git config submodule.ros2/src/crane_x7_ros.ignore dirty
+
+# 2. 通常通り開発
+# banana.cppを編集して保存
+
+# 3. 親リポジトリの変更だけコミット
+git add README.md .env scripts/
+git commit -m "Update documentation"
+git push
+
+# 4. サブモジュールの警告は無視される
+git status  # クリーン！
+```
+
+これで安心して開発できます！🎉
 
 ## トラブルシューティング
 
