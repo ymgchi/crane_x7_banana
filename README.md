@@ -27,14 +27,6 @@ CRANE-X7 ロボットアームを使用したピック&プレース動作のデ�
 - Gazebo (物理シミュレーション)
 - Docker (環境構築)
 
-### 外部/サードパーティパッケージ - Gitサブモジュール
-
-- crane_x7_ros - RT Corporation: Apache License 2.0
-- crane_x7_description - RT Corporation: RT Corporation 非商用ライセンス
-  - 研究・内部使用のみ許可
-  - 商用利用には RT Corporation からの事前許可が必要
-
-重要: RT Corporation のパッケージ `crane_x7_ros` と `crane_x7_description` は、このリポジトリのオリジナルコードとは異なるライセンス条件が適用されます。実運用や配布の前に各サブパッケージの `LICENSE` を必ず確認してください。
 
 ## 動作環境
 
@@ -636,6 +628,16 @@ DISPLAY=:1
 - **文責**: ymgchi
 
 > このプロジェクトは教育目的で作成されており、MIT License の下で自由に使用・改変・再配布が可能です。
+
+### 外部/サードパーティパッケージ - Gitサブモジュール
+
+- crane_x7_ros - RT Corporation: Apache License 2.0
+- crane_x7_description - RT Corporation: RT Corporation 非商用ライセンス
+  - 研究・内部使用のみ許可
+  - 商用利用には RT Corporation からの事前許可が必要
+
+重要: RT Corporation のパッケージ `crane_x7_ros` と `crane_x7_description` は、このリポジトリのオリジナルコードとは異なるライセンス条件が適用されます。実運用や配布の前に各サブパッケージの `LICENSE` を必ず確認してください。
+
 
 ### 元リポジトリ
 
