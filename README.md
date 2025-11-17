@@ -27,14 +27,14 @@ CRANE-X7 ロボットアームを使用したピック&プレース動作のデ�
 - Gazebo (物理シミュレーション)
 - Docker (環境構築)
 
-### 使用パッケージ
+### 外部/サードパーティパッケージ - Gitサブモジュール
 
-注意: 本プロジェクトでは一部のパッケージをリポジトリ内に含め（フォークしてソースを配置）、一部を外部リポジトリとしてサブモジュールで参照しています。リポジトリをクローンする際はサブモジュールを含めて取得してください（`git clone --recursive` または `git submodule update --init --recursive`）。
+- crane_x7_ros - RT Corporation: Apache License 2.0
+- crane_x7_description - RT Corporation: RT Corporation 非商用ライセンス
+  - 研究・内部使用のみ許可
+  - 商用利用には RT Corporation からの事前許可が必要
 
-- **crane_x7_ros**: [ymgchi/crane_x7_ros](https://github.com/ymgchi/crane_x7_ros) (Apache License 2.0)
-  - 本リポジトリ内にフォークされたソースを含んでいます（パス: `ros2/src/crane_x7_ros`）。ローカルで編集・ビルド可能です。
-- **crane_x7_description**: [rt-net/crane_x7_description](https://github.com/rt-net/crane_x7_description) (NON-COMMERCIAL LICENSE)
-  - ロボットモデルを提供する外部リポジトリを Git サブモジュールとして参照しています。サブモジュールを取得する必要があり、該当パッケージ固有のライセンス条件が適用されます。
+重要: RT Corporation のパッケージ `crane_x7_ros` と `crane_x7_description` は、このリポジトリのオリジナルコードとは異なるライセンス条件が適用されます。実運用や配布の前に各サブパッケージの `LICENSE` を必ず確認してください。
 
 ## 動作環境
 
@@ -444,7 +444,7 @@ crane_x7_banana/
             │   └── worlds/          # Gazeboワールドファイル
             │
             └── crane_x7_moveit_config/  # MoveIt設定
-                ├── config/              # 運動学、軌道計画設定
+                ├── config/              #運動学、軌道計画設定
                 ├── launch/              # MoveIt起動ファイル
                 └── srdf/                # セマンティックロボット記述
 ```
