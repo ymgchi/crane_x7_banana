@@ -9,10 +9,16 @@ RUN apt-get update && apt-get upgrade -y && \
     xserver-xorg \
     python3-pip
 
-# Install MoveIt related packages
+# Install MoveIt and required packages
 RUN apt-get install -y --no-install-recommends \
     ros-humble-moveit \
-    ros-humble-gazebo-msgs
+    ros-humble-moveit-ros-planning-interface \
+    ros-humble-gazebo-msgs \
+    ros-humble-cv-bridge \
+    ros-humble-angles \
+    ros-humble-image-geometry \
+    ros-humble-pcl-ros \
+    libopencv-dev
 
 # Install dependencies
 RUN mkdir -p /tmp/ros2_dependencies/src
