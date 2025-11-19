@@ -1,0 +1,68 @@
+# ライセンスと著作権
+
+## このリポジトリ
+
+- **著作権**: Copyright (c) 2025 ymgchi
+- **ライセンス**: MIT License
+- **文責**: ymgchi
+
+> このプロジェクトは教育目的で作成されており、MIT License の下で自由に使用・改変・再配布が可能です。
+
+## 外部/サードパーティパッケージ
+
+### Git サブモジュール
+
+- **crane_x7_ros** - RT Corporation: Apache License 2.0
+- **crane_x7_description** - RT Corporation: 非商用ライセンス
+  - 研究・内部使用のみ許可
+  - 商用利用には RT Corporation からの事前許可が必要
+
+> **重要**: RT Corporation のパッケージは、このリポジトリのオリジナルコードとは異なるライセンス条件が適用されます。
+
+## 元リポジトリ
+
+このプロジェクトは [NOPLAB/crane_x7_vla](https://github.com/NOPLAB/crane_x7_vla) をベースにしています。
+
+- **元リポジトリ著作権**: Copyright (c) 2025 nop (NOPLAB)
+- **元リポジトリライセンス**: MIT License
+
+## CRANE-X7 関連パッケージ
+
+### crane_x7_ros パッケージ
+
+- **著作権**: Copyright 2022 RT Corporation
+- **ライセンス**: Apache License 2.0
+- **使用バージョン**: [ymgchi/crane_x7_ros](https://github.com/ymgchi/crane_x7_ros) (humble branch)
+- **フォーク元**: [NOPLAB/crane_x7_ros](https://github.com/NOPLAB/crane_x7_ros)
+- **大元のリポジトリ**: [rt-net/crane_x7_ros](https://github.com/rt-net/crane_x7_ros)
+- **カスタマイズ内容**:
+  - banana sorting demo を追加
+
+### crane_x7_description パッケージ
+
+- **著作権**: Copyright 2022 RT Corporation
+- **ライセンス**: NON-COMMERCIAL LICENSE
+- **リポジトリ**: [rt-net/crane_x7_description](https://github.com/rt-net/crane_x7_description)
+
+> **重要**: `crane_x7_description`は**非商用ライセンス**です。商用利用を検討する場合は、RT Corporation に直接お問い合わせください。
+
+### banana sorting demo（オリジナル）
+
+- **著作権**: Copyright (c) 2025 ymgchi
+- **ライセンス**: Apache License 2.0
+- **リポジトリ**: [ymgchi/crane_x7_ros](https://github.com/ymgchi/crane_x7_ros) (humble branch)
+- **ファイル**:
+  - `ros2/src/crane_x7_ros/crane_x7_examples/src/banana.cpp`
+  - `ros2/src/crane_x7_ros/crane_x7_examples/launch/banana.launch.py`
+  - 関連する CMakeLists.txt、package.xml の変更
+
+## ライセンス互換性
+
+| コンポーネント                   | ライセンス     | 商用利用 | 改変 | 再配布 |
+| -------------------------------- | -------------- | -------- | ---- | ------ |
+| このリポジトリ（親）             | MIT            | 可       | 可   | 可     |
+| crane_x7_ros (ymgchi フォーク版) | Apache 2.0     | 可       | 可   | 可     |
+| banana demo                      | Apache 2.0     | 可       | 可   | 可     |
+| crane_x7_description             | NON-COMMERCIAL | 不可     | 可   | 可     |
+
+詳細は各パッケージの `LICENSE` ファイルを参照してください。
