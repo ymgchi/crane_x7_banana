@@ -44,6 +44,7 @@ xhost +
 
 ```bash
 docker exec -it ros-dev-banana /bin/bash
+source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
 ros2 launch crane_x7_examples banana.launch.py use_sim_time:=true
@@ -60,6 +61,7 @@ sudo chmod 666 /dev/ttyUSB0
 
 ```bash
 docker exec -it ros-dev-banana /bin/bash
+source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
 ros2 launch crane_x7_examples banana.launch.py use_sim_time:=false
