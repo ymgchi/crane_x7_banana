@@ -29,7 +29,7 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-    command: bash -c "cd /workspace/ros2 && if [ ! -d install ]; then source /opt/ros/humble/setup.bash && colcon build --symlink-install; fi && source /workspace/ros2/install/setup.bash && ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0"
+    command: bash -c "set -e && cd /workspace/ros2 && ([ -f install/setup.bash ] || (source /opt/ros/humble/setup.bash && colcon build --symlink-install)) && source /workspace/ros2/install/setup.bash && ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0"
 
   crane_x7_ros2_sim:
     container_name: ros-dev-banana
@@ -72,5 +72,5 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-    command: bash -c "cd /workspace/ros2 && if [ ! -d install ]; then source /opt/ros/humble/setup.bash && colcon build --symlink-install; fi && source /workspace/ros2/install/setup.bash && ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py use_sim_time:=true"
+    command: bash -c "set -e && cd /workspace/ros2 && ([ -f install/setup.bash ] || (source /opt/ros/humble/setup.bash && colcon build --symlink-install)) && source /workspace/ros2/install/setup.bash && ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py use_sim_time:=true"
 
