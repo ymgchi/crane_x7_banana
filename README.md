@@ -10,6 +10,10 @@ CRANE-X7 ロボットアームを使用したバナナ仕分けデモンスト�
 
 **開発者**: ymgchi Nekomaru TomiKazu-git
 
+## デモ
+
+https://github.com/user-attachments/assets/4839138e-3cad-45b9-bf47-933769d0ca6d
+
 ### 使用技術
 
 - ROS 2 Humble
