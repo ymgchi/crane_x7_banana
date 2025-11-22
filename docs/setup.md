@@ -41,11 +41,35 @@ USB_DEVICE=/dev/ttyACM0
 DISPLAY=:1
 ```
 
-## 3. Docker イメージのビルド
+## 3. X11 権限の設定
+
+GUI アプリケーション（Gazebo、RViz）を使用するため、X11 の権限を設定します。
 
 ```bash
-./scripts/build.sh
+xhost +
 ```
+
+## 4. Docker コンテナの起動
+
+### シミュレーター環境
+
+```bash
+docker compose --profile sim up --build
+```
+
+### 実機環境
+
+実機を使用する場合は、USB ポートの権限を設定してから起動します。
+
+```bash
+# USB ポートの権限設定
+sudo chmod 666 /dev/ttyUSB0
+
+# 実機環境でコンテナを起動
+docker compose --profile real up --build
+```
+
+> **注**: コンテナが正常に起動すると、Gazebo シミュレーターや MoveIt の RViz ウィンドウが表示されます。
 
 ## 次のステップ
 

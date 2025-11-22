@@ -13,12 +13,13 @@
 
 ## CRANE-X7 関連リポジトリ
 
-| リポジトリ                      | 説明                                   | URL                                            |
-| ------------------------------- | -------------------------------------- | ---------------------------------------------- |
-| crane_x7                        | メインリポジトリ                       | https://github.com/rt-net/crane_x7             |
-| crane_x7_ros                    | ROS 2 パッケージ（公式）               | https://github.com/rt-net/crane_x7_ros         |
-| crane_x7_ros（NOPLAB フォーク） | ROS 2 パッケージ（NOPLAB 版）          | https://github.com/NOPLAB/crane_x7_ros         |
-| crane_x7_ros（ymgchi フォーク） | ROS 2 パッケージ（banana demo 追加版） | https://github.com/ymgchi/crane_x7_ros         |
-| crane_x7_description            | ロボットモデル                         | https://github.com/rt-net/crane_x7_description |
-| crane_x7_hardware               | ハードウェア情報                       | https://github.com/rt-net/crane_x7_Hardware    |
-| crane_x7_samples                | Python サンプル集                      | https://github.com/rt-net/crane_x7_samples     |
+| リポジトリ                                | 説明                                                      | URL                                                  |
+| ----------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------- |
+| crane_x7                                  | メインリポジトリ                                          | https://github.com/rt-net/crane_x7                   |
+| crane_x7_ros（公式）                      | ROS 2 パッケージ（公式）                                  | https://github.com/rt-net/crane_x7_ros               |
+| crane_x7_ros（NOPLAB フォーク）           | ROS 2 パッケージ（NOPLAB 版）                             | https://github.com/NOPLAB/crane_x7_ros               |
+| crane_x7_ros（ymgchi フォーク）           | ROS 2 パッケージ（banana & color sorting demo 追加版）   | https://github.com/ymgchi/crane_x7_ros               |
+| crane_x7_description（公式）              | ロボットモデル（公式）                                    | https://github.com/rt-net/crane_x7_description       |
+| crane_x7_description（ymgchi フォーク）   | ロボットモデル（RealSense D435 カメラ追加版）             | https://github.com/ymgchi/crane_x7_description       |
+| crane_x7_hardware                         | ハードウェア情報                                          | https://github.com/rt-net/crane_x7_Hardware          |
+| crane_x7_samples                          | Python サンプル集                                         | https://github.com/rt-net/crane_x7_samples           |

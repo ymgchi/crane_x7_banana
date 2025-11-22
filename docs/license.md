@@ -42,11 +42,16 @@
 
 - **著作権**: Copyright 2022 RT Corporation
 - **ライセンス**: NON-COMMERCIAL LICENSE
-- **リポジトリ**: [rt-net/crane_x7_description](https://github.com/rt-net/crane_x7_description)
+- **使用バージョン**: [ymgchi/crane_x7_description](https://github.com/ymgchi/crane_x7_description) (humble branch)
+- **フォーク元**: [rt-net/crane_x7_description](https://github.com/rt-net/crane_x7_description)
+- **カスタマイズ内容**:
+  - RealSense D435 RGBD カメラセンサーを追加
 
 > **重要**: `crane_x7_description`は**非商用ライセンス**です。商用利用を検討する場合は、RT Corporation に直接お問い合わせください。
 
-### banana sorting demo（オリジナル）
+### オリジナルデモプログラム
+
+#### banana sorting demo
 
 - **著作権**: Copyright (c) 2025 ymgchi
 - **ライセンス**: Apache License 2.0
@@ -56,6 +61,21 @@
   - `ros2/src/crane_x7_ros/crane_x7_examples/launch/banana.launch.py`
   - 関連する CMakeLists.txt、package.xml の変更
 
+#### color sorting demo
+
+- **著作権**: Copyright (c) 2025 ymgchi
+- **ライセンス**: Apache License 2.0
+- **リポジトリ**: [ymgchi/crane_x7_ros](https://github.com/ymgchi/crane_x7_ros) (humble branch)
+- **ファイル**:
+  - `ros2/src/crane_x7_ros/crane_x7_examples/src/color_sorting.cpp`
+  - `ros2/src/crane_x7_ros/crane_x7_examples/launch/color_sorting.launch.py`
+  - 関連する CMakeLists.txt、package.xml の変更
+- **特徴**:
+  - OpenCV による HSV 色空間での色検出
+  - RealSense D435 カメラによる RGB-D センシング
+  - TF2 による座標変換
+  - 複数物体の一括検出とバッチ処理
+
 ## ライセンス互換性
 
 | コンポーネント                   | ライセンス     | 商用利用 | 改変 | 再配布 |
@@ -63,6 +83,7 @@
 | このリポジトリ（親）             | MIT            | 可       | 可   | 可     |
 | crane_x7_ros (ymgchi フォーク版) | Apache 2.0     | 可       | 可   | 可     |
 | banana demo                      | Apache 2.0     | 可       | 可   | 可     |
-| crane_x7_description             | NON-COMMERCIAL | 不可     | 可   | 可     |
+| color sorting demo               | Apache 2.0     | 可       | 可   | 可     |
+| crane_x7_description (ymgchi フォーク版) | NON-COMMERCIAL | 不可     | 可   | 可     |
 
 詳細は各パッケージの `LICENSE` ファイルを参照してください。
