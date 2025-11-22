@@ -2,13 +2,20 @@
 
 **未来ロボティクス学科 ロボット設計制作論実習 3**
 
-CRANE-X7 ロボットアームを使用したバナナ仕分けデモンストレーション
+CRANE-X7 ロボットアームを使用したデモンストレーション
 
 ## 概要
 
-物体を固定位置から 3 箇所（右・中央・左）に順次配置する動作を自動で実行します。
+このリポジトリには以下の2つのデモプログラムが含まれています：
 
-**開発者**: ymgchi Nekomaru TomiKazu-git
+### 1. 色分別バナナ仕分けデモ（color_sorting）
+カメラで青・黄・緑の3色のバナナを検出し、色ごとに異なる場所へ自動仕分けします。
+- **青色**: 右奥に配置
+- **黄色**: 左奥に配置
+- **緑色**: 前方に配置
+
+### 2. バナナ仕分けデモ（banana）
+物体を固定位置から 3 箇所（右・中央・左）に順次配置する動作を自動で実行します。
 
 ## デモ
 
@@ -19,6 +26,8 @@ https://github.com/user-attachments/assets/4839138e-3cad-45b9-bf47-933769d0ca6d
 - ROS 2 Humble
 - MoveIt (モーションプランニング)
 - Gazebo (物理シミュレーション)
+- OpenCV (色検出・画像処理)
+- RealSense カメラ (深度センシング)
 - Docker (環境構築)
 
 ### 動作環境
@@ -44,13 +53,18 @@ xhost +
 ./scripts/run_sim.sh
 ```
 
-別ターミナルで:
+別ターミナルで以下を実行:
 
 ```bash
 docker exec -it ros-dev-banana /bin/bash
 source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
+
+# 色分別バナナ仕分けデモを実行する場合
+ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=true
+
+# または、バナナ仕分けデモを実行する場合
 ros2 launch crane_x7_examples banana.launch.py use_sim_time:=true
 ```
 
@@ -61,13 +75,18 @@ sudo chmod 666 /dev/ttyUSB0
 ./scripts/run_real.sh
 ```
 
-別ターミナルで:
+別ターミナルで以下を実行:
 
 ```bash
 docker exec -it ros-dev-banana /bin/bash
 source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
+
+# 色分別バナナ仕分けデモを実行する場合
+ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=false
+
+# または、バナナ仕分けデモを実行する場合
 ros2 launch crane_x7_examples banana.launch.py use_sim_time:=false
 ```
 
