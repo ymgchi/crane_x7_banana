@@ -49,14 +49,20 @@ cp .env.template .env
 ### 2. シミュレーターで実行
 
 ```bash
+# X11の権限設定（GUIアプリケーション表示に必要）
 xhost +
-./scripts/run_sim.sh
+
+# シミュレーター環境でコンテナを起動
+docker compose --profile sim up --build
 ```
 
 別ターミナルで以下を実行:
 
 ```bash
+# コンテナに接続
 docker exec -it ros-dev-banana /bin/bash
+
+# ROS 2環境をセットアップ
 source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
@@ -71,14 +77,20 @@ ros2 launch crane_x7_examples banana.launch.py use_sim_time:=true
 ### 3. 実機で実行
 
 ```bash
+# USBポートの権限設定
 sudo chmod 666 /dev/ttyUSB0
-./scripts/run_real.sh
+
+# 実機環境でコンテナを起動
+docker compose --profile real up --build
 ```
 
 別ターミナルで以下を実行:
 
 ```bash
+# コンテナに接続
 docker exec -it ros-dev-banana /bin/bash
+
+# ROS 2環境をセットアップ
 source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
@@ -98,6 +110,7 @@ ros2 launch crane_x7_examples banana.launch.py use_sim_time:=false
 | [実行方法](docs/usage.md) | シミュレーター/実機での実行方法 |
 | [実装詳細](docs/implementation.md) | バナナ仕分けデモの実装解説 |
 | [開発ガイド](docs/development.md) | 開発環境と新規プログラム追加 |
+| [Git運用ルール](docs/git-workflow.md) | コミットメッセージとブランチ運用ルール |
 | [トラブルシューティング](docs/troubleshooting.md) | よくある問題と解決方法 |
 | [ライセンス](docs/license.md) | ライセンスと著作権情報 |
 | [参考情報](docs/references.md) | 関連リンク集 |

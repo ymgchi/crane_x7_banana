@@ -127,4 +127,5 @@ crane_x7_banana/
 ## 関連ドキュメント
 
 - [実装詳細](implementation.md) - バナナデモの実装解説
+- [Git運用ルール](git-workflow.md) - コミットメッセージとブランチ運用ルール
 - [トラブルシューティング](troubleshooting.md) - 問題解決
