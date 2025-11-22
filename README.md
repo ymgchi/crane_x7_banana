@@ -108,6 +108,7 @@ ros2 launch crane_x7_examples banana.launch.py use_sim_time:=false
 | --- | --- |
 | [セットアップ](docs/setup.md) | 環境構築の詳細手順 |
 | [実行方法](docs/usage.md) | シミュレーター/実機での実行方法 |
+| [色分別仕分け実装詳細](docs/color-sorting-implementation.md) | 色分別バナナ仕分けデモの実装解説 |
 | [実装詳細](docs/implementation.md) | バナナ仕分けデモの実装解説 |
 | [開発ガイド](docs/development.md) | 開発環境と新規プログラム追加 |
 | [Git運用ルール](docs/git-workflow.md) | コミットメッセージとブランチ運用ルール |
