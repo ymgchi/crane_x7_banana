@@ -6,7 +6,7 @@ CRANE-X7 ロボットアームを使用したビジョンベースのピック�
 
 ## デモ
 
-https://github.com/user-attachments/assets/4839138e-3cad-45b9-bf47-933769d0ca6d
+https://github.com/user-attachments/assets/6d47b2b3-5b5c-4eec-bcbe-505cfa42c7e4
 
 ## 概要
 
