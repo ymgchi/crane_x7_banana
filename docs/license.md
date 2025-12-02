@@ -16,6 +16,7 @@
 - **crane_x7_description** - RT Corporation: 非商用ライセンス
   - 研究・内部使用のみ許可
   - 商用利用には RT Corporation からの事前許可が必要
+- **realsense-ros** - Intel Corporation: Apache License 2.0
 
 > **重要**: RT Corporation のパッケージは、このリポジトリのオリジナルコードとは異なるライセンス条件が適用されます。
 
@@ -48,6 +49,14 @@
   - RealSense D435 RGBD カメラセンサーを追加
 
 > **重要**: `crane_x7_description`は**非商用ライセンス**です。商用利用を検討する場合は、RT Corporation に直接お問い合わせください。
+
+### realsense-ros パッケージ
+
+- **著作権**: Copyright 2023 Intel Corporation
+- **ライセンス**: Apache License 2.0
+- **使用バージョン**: [ymgchi/realsense-ros](https://github.com/ymgchi/realsense-ros) (ros2 branch)
+- **フォーク元**: [IntelRealSense/realsense-ros](https://github.com/IntelRealSense/realsense-ros)
+- **用途**: RealSense D435 カメラの ROS 2 ドライバ
 
 ### オリジナルデモプログラム
 
@@ -85,5 +94,6 @@
 | banana demo                      | Apache 2.0     | 可       | 可   | 可     |
 | color sorting demo               | Apache 2.0     | 可       | 可   | 可     |
 | crane_x7_description (ymgchi フォーク版) | NON-COMMERCIAL | 不可     | 可   | 可     |
+| realsense-ros (ymgchi フォーク版) | Apache 2.0     | 可       | 可   | 可     |
 
 詳細は各パッケージの `LICENSE` ファイルを参照してください。

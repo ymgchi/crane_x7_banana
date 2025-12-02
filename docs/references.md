@@ -23,3 +23,10 @@
 | crane_x7_description（ymgchi フォーク）   | ロボットモデル（RealSense D435 カメラ追加版）             | https://github.com/ymgchi/crane_x7_description       |
 | crane_x7_hardware                         | ハードウェア情報                                          | https://github.com/rt-net/crane_x7_Hardware          |
 | crane_x7_samples                          | Python サンプル集                                         | https://github.com/rt-net/crane_x7_samples           |
+
+## RealSense 関連リポジトリ
+
+| リポジトリ                      | 説明                                    | URL                                                  |
+| ------------------------------- | --------------------------------------- | ---------------------------------------------------- |
+| realsense-ros（公式）           | Intel RealSense ROS 2 ドライバ（公式）  | https://github.com/IntelRealSense/realsense-ros      |
+| realsense-ros（ymgchi フォーク）| RealSense ROS 2 ドライバ（本プロジェクト用） | https://github.com/ymgchi/realsense-ros              |
