@@ -54,6 +54,16 @@ xhost +
 ### シミュレーター環境
 
 ```bash
+docker compose --profile sim up
+```
+
+初回起動時は Docker イメージのビルドが行われます。
+- apt キャッシュマウントにより、2回目以降のビルドは高速化されます
+- Gazebo モデルキャッシュにより、モデルの再ダウンロードが不要になります
+
+**イメージを再ビルドする場合（Dockerfile変更時）:**
+
+```bash
 docker compose --profile sim up --build
 ```
 
@@ -66,10 +76,32 @@ docker compose --profile sim up --build
 sudo chmod 666 /dev/ttyUSB0
 
 # 実機環境でコンテナを起動
-docker compose --profile real up --build
+docker compose --profile real up
 ```
 
-> **注**: コンテナが正常に起動すると、Gazebo シミュレーターや MoveIt の RViz ウィンドウが表示されます。
+### コンテナの停止
+
+Gazebo/TF の状態をリセットするため、再起動前には必ずコンテナを停止してください:
+
+```bash
+docker stop ros-dev-banana
+```
+
+## 5. コンテナ内での作業
+
+別ターミナルでコンテナに接続:
+
+```bash
+docker exec -it ros-dev-banana /bin/bash
+```
+
+ROS 2 環境をセットアップ:
+
+```bash
+source /opt/ros/humble/setup.bash
+cd /workspace/ros2
+source install/setup.bash
+```
 
 ## 次のステップ
 

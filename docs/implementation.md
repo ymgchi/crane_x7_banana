@@ -20,7 +20,7 @@ crane_x7_examples/
 
 ### 2. 動作の安全性
 
-- 速度・加速度を最大値の 30%に制限
+- 速度・加速度を最大値の 70%に制限
 - 各動作の成功/失敗を確認
 - 段階的な動作（上昇 → 移動 → 下降）
 
@@ -45,9 +45,9 @@ crane_x7_examples/
 
 **配置座標:**
 
-- タスク 1: (0.2, 0.15, 0.13) 右側
-- タスク 2: (0.2, 0.0, 0.13) 中央
-- タスク 3: (0.2, -0.15, 0.13) 左側
+- タスク 1: (0.35, 0.20, 0.12) 右側
+- タスク 2: (0.35, 0.0, 0.12) 中央
+- タスク 3: (0.35, -0.20, 0.12) 左側
 
 ## 主要なコード
 
@@ -57,8 +57,8 @@ moveit::planning_interface::MoveGroupInterface move_group_arm(node, "arm");
 moveit::planning_interface::MoveGroupInterface move_group_gripper(node, "gripper");
 
 // 速度・加速度の制限
-move_group_arm.setMaxVelocityScalingFactor(0.3);
-move_group_arm.setMaxAccelerationScalingFactor(0.3);
+move_group_arm.setMaxVelocityScalingFactor(0.7);
+move_group_arm.setMaxAccelerationScalingFactor(0.7);
 
 // 目標姿勢の設定
 geometry_msgs::msg::Pose target_pose;

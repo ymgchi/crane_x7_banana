@@ -6,19 +6,26 @@
 
 ```bash
 xhost +
-./scripts/run_sim.sh
+docker compose --profile sim up
 ```
 
-### 2. バナナデモを実行
+### 2. 色分別キューブ仕分けデモを実行
 
 別のターミナルで:
 
 ```bash
 docker exec -it ros-dev-banana /bin/bash
+source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
-ros2 launch crane_x7_examples banana.launch.py use_sim_time:=true
+ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=true
 ```
+
+デモが開始すると:
+1. 5個のキューブがランダムな色・位置で自動スポーン
+2. カメラで全キューブをスキャン
+3. 各キューブをビジュアルサーボイングで高精度に位置合わせ
+4. 色ごとに指定の場所へ配置
 
 ## 実機で実行
 
@@ -26,18 +33,19 @@ ros2 launch crane_x7_examples banana.launch.py use_sim_time:=true
 
 ```bash
 sudo chmod 666 /dev/ttyUSB0
-./scripts/run_real.sh
+docker compose --profile real up
 ```
 
-### 2. バナナデモを実行
+### 2. 色分別キューブ仕分けデモを実行
 
 別のターミナルで:
 
 ```bash
 docker exec -it ros-dev-banana /bin/bash
+source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
-ros2 launch crane_x7_examples banana.launch.py use_sim_time:=false
+ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=false
 ```
 
 ## その他のサンプルプログラム
@@ -58,17 +66,8 @@ ros2 launch crane_x7_examples banana.launch.py use_sim_time:=false
 ros2 launch crane_x7_examples example.launch.py example:='gripper_control' use_sim_time:='true'
 ```
 
-## 実機での標準起動
-
-```bash
-# デモプログラムを起動
-ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0
-
-# または、特定のサンプルを実行
-ros2 launch crane_x7_examples example.launch.py example:='gripper_control'
-```
-
 ## 関連ドキュメント
 
 - [セットアップ](setup.md) - 初期設定
+- [色分別デモ実装詳細](color-sorting-implementation.md) - アルゴリズムの解説
 - [トラブルシューティング](troubleshooting.md) - 問題が発生した場合
