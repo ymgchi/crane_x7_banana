@@ -1,3 +1,6 @@
+volumes:
+  gazebo_fuel_cache:  # Gazeboモデルキャッシュ（再ダウンロード防止）
+
 services:
   ros2_builder:
     profiles:
@@ -80,6 +83,7 @@ services:
       - type: bind
         source: "/dev/dri"
         target: "/dev/dri"
+      - gazebo_fuel_cache:/root/.gz/fuel  # Gazeboモデルキャッシュ
     devices:
       - /dev/dri/card1:/dev/dri/card1
       - /dev/dri/card2:/dev/dri/card2

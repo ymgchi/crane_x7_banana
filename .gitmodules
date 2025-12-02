@@ -7,3 +7,8 @@
 	path = ros2/src/crane_x7_ros
 	url = https://github.com/ymgchi/crane_x7_ros.git
 	branch = humble
+
+[submodule "ros2/src/realsense-ros"]
+	path = ros2/src/realsense-ros
+	url = git@github.com:ymgchi/realsense-ros.git
+	branch = ros2
