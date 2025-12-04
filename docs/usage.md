@@ -18,13 +18,34 @@ docker exec -it ros-dev-banana /bin/bash
 source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
+```
+
+#### C++版デモ（color_sorting）
+
+```bash
 ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=true
 ```
+
+#### Python版デモ（point_cloud_sorting）
+
+```bash
+ros2 launch crane_x7_examples point_cloud_sorting.launch.py use_sim_time:=true
+```
+
+### デモの違い
+
+| 項目 | color_sorting | point_cloud_sorting |
+|------|---------------|---------------------|
+| 実装言語 | C++ | Python + C++（サービス） |
+| 検出方式 | HSV色検出 | HSV色検出 + エッジ検出 |
+| RViz可視化 | なし | 検出点・エッジマーカー表示 |
+| 最大イテレーション | 無制限 | 10回 |
+| 把持前待機時間 | なし | 0.85秒 |
 
 デモが開始すると:
 1. 5個のキューブがランダムな色・位置で自動スポーン
 2. カメラで全キューブをスキャン
-3. 各キューブをビジュアルサーボイングで高精度に位置合わせ
+3. 各キューブの位置を検出して把持
 4. 色ごとに指定の場所へ配置
 
 ## 実機で実行
@@ -45,7 +66,12 @@ docker exec -it ros-dev-banana /bin/bash
 source /opt/ros/humble/setup.bash
 cd /workspace/ros2
 source install/setup.bash
+
+# C++版
 ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=false
+
+# Python版
+ros2 launch crane_x7_examples point_cloud_sorting.launch.py use_sim_time:=false
 ```
 
 ## その他のサンプルプログラム

@@ -16,12 +16,20 @@ https://github.com/user-attachments/assets/6d47b2b3-5b5c-4eec-bcbe-505cfa42c7e4
 - **黄色キューブ**: 左奥に配置
 - **緑色キューブ**: 前方に配置
 
+### 利用可能なデモ
+
+| デモ | 説明 | 特徴 |
+|------|------|------|
+| **color_sorting** | C++実装の色分別デモ | HSV色検出、ビジュアルサーボイング |
+| **point_cloud_sorting** | Python実装の点群ベース色分別デモ | エッジ検出、RViz可視化、C++/Python分離アーキテクチャ |
+
 ### 主な機能
 
-- ビジュアルサーボイングによる高精度な位置合わせ
+- HSV色空間による高精度な色検出
 - 5個のキューブをランダムな色・位置で自動スポーン
 - グリッパー・カメラ間オフセット補正
 - キューブの角度検出と把持姿勢の最適化
+- RVizでの検出結果・点群可視化（point_cloud_sorting）
 
 ## クイックスタート
 
@@ -38,7 +46,12 @@ docker compose --profile sim up
 # 別ターミナルでデモ実行
 docker exec -it ros-dev-banana /bin/bash
 source /opt/ros/humble/setup.bash && source /workspace/ros2/install/setup.bash
+
+# C++版デモ
 ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=true
+
+# Python版デモ（点群ベース）
+ros2 launch crane_x7_examples point_cloud_sorting.launch.py use_sim_time:=true
 ```
 
 詳細は [セットアップガイド](docs/setup.md) を参照してください。

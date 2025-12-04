@@ -18,6 +18,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get install -y --no-install-recommends \
     ros-humble-moveit \
     ros-humble-moveit-ros-planning-interface \
+    ros-humble-pymoveit2 \
     ros-humble-gazebo-msgs \
     ros-humble-cv-bridge \
     ros-humble-angles \

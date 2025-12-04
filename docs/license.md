@@ -85,6 +85,23 @@
   - TF2 による座標変換
   - 複数物体の一括検出とバッチ処理
 
+#### point cloud sorting demo
+
+- **著作権**: Copyright (c) 2025 ymgchi
+- **ライセンス**: Apache License 2.0
+- **リポジトリ**: [ymgchi/crane_x7_ros](https://github.com/ymgchi/crane_x7_ros) (humble branch)
+- **ファイル**:
+  - `ros2/src/crane_x7_ros/crane_x7_examples/scripts/point_cloud_sorting_node.py`
+  - `ros2/src/crane_x7_ros/crane_x7_examples/scripts/point_cloud_sorting/` (Python モジュール)
+  - `ros2/src/crane_x7_ros/crane_x7_examples/src/motion_service_node.cpp`
+  - `ros2/src/crane_x7_ros/crane_x7_examples/launch/point_cloud_sorting.launch.py`
+  - 関連する CMakeLists.txt、package.xml の変更
+- **特徴**:
+  - Python + C++ 分離アーキテクチャ
+  - HSV 色検出 + エッジ検出
+  - RViz 可視化対応
+  - ROS 2 サービスベースのロボット制御
+
 ## ライセンス互換性
 
 | コンポーネント                   | ライセンス     | 商用利用 | 改変 | 再配布 |
@@ -93,6 +110,7 @@
 | crane_x7_ros (ymgchi フォーク版) | Apache 2.0     | 可       | 可   | 可     |
 | banana demo                      | Apache 2.0     | 可       | 可   | 可     |
 | color sorting demo               | Apache 2.0     | 可       | 可   | 可     |
+| point cloud sorting demo         | Apache 2.0     | 可       | 可   | 可     |
 | crane_x7_description (ymgchi フォーク版) | NON-COMMERCIAL | 不可     | 可   | 可     |
 | realsense-ros (ymgchi フォーク版) | Apache 2.0     | 可       | 可   | 可     |
 

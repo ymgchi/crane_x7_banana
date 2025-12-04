@@ -1,6 +1,19 @@
 # 色分別キューブ仕分けデモの実装
 
-## プログラム構成
+このドキュメントでは、2つの色分別デモ実装について解説します。
+
+## デモ一覧
+
+| デモ | ファイル | 言語 | 特徴 |
+|------|----------|------|------|
+| **color_sorting** | `src/color_sorting.cpp` | C++ | 単一ファイル、ビジュアルサーボイング |
+| **point_cloud_sorting** | `scripts/point_cloud_sorting/` | Python + C++ | モジュール分離、RViz可視化 |
+
+---
+
+## 1. color_sorting（C++版）
+
+### プログラム構成
 
 ```
 crane_x7_examples/
@@ -320,6 +333,125 @@ void spawnRandomCubes(int num_cubes = 5) {
 
 1. 運搬時持ち上げ高さ（`PICK_Z_LIFT`）を増やす（デフォルト: 0.30m）
 2. 配置場所の位置を調整して経路を変更
+
+---
+
+## 2. point_cloud_sorting（Python版）
+
+### プログラム構成
+
+```
+crane_x7_examples/
+├── scripts/
+│   ├── point_cloud_sorting_node.py       # メインノード
+│   └── point_cloud_sorting/              # Pythonモジュール
+│       ├── __init__.py                   # パッケージ初期化
+│       ├── color_detector.py             # HSV色検出
+│       ├── edge_grasp_finder.py          # エッジ検出（点群ベース）
+│       └── robot_controller.py           # ロボット制御（サービスクライアント）
+├── src/
+│   └── motion_service_node.cpp           # MoveItサービスノード（C++）
+└── launch/
+    └── point_cloud_sorting.launch.py     # 起動ファイル
+```
+
+### アーキテクチャ
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Python Node                               │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐ │
+│  │  ColorDetector  │  │ EdgeGraspFinder │  │RobotController│ │
+│  │  (HSV検出)      │  │ (点群エッジ)    │  │(サービス呼出) │ │
+│  └─────────────────┘  └─────────────────┘  └──────────────┘ │
+└───────────────────────────────┬─────────────────────────────┘
+                                │ ROS 2 Services
+                                ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  C++ Motion Service Node                     │
+│  ┌─────────────────────────────────────────────────────────┐ │
+│  │              MoveGroupInterface (MoveIt)                 │ │
+│  │  - /motion/move_to_camera_pose                          │ │
+│  │  - /motion/open_gripper                                 │ │
+│  │  - /motion/close_gripper                                │ │
+│  │  - /motion/execute_pose                                 │ │
+│  │  - /motion/execute_cartesian                            │ │
+│  └─────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 実装の特徴
+
+#### 1. C++/Python分離アーキテクチャ
+
+- **C++ (motion_service_node.cpp)**: MoveIt MoveGroupInterfaceをラップしたROS 2サービス
+- **Python (point_cloud_sorting_node.py)**: メインロジック、サービスクライアントとして動作
+
+この分離により:
+- Pythonでの高レベルロジック記述が容易
+- MoveItの複雑な初期化をC++側で管理
+- デバッグ・開発が高速化
+
+#### 2. モジュール化された検出システム
+
+- **ColorDetector**: HSV色空間での色検出（color_sorting.cppからポート）
+- **EdgeGraspFinder**: 点群のエッジ検出による把持点精密化
+- **RobotController**: サービスベースのロボット制御
+
+#### 3. RViz可視化
+
+以下のトピックでRVizに検出結果を表示:
+- `/edge_detection/cloud_filtered` - フィルタリング後の点群
+- `/edge_detection/edges` - 検出されたエッジポイント
+- `/edge_detection/grasp_marker` - 把持候補点マーカー
+
+### パラメータ設定
+
+#### メインノード (point_cloud_sorting_node.py)
+
+| パラメータ | デフォルト値 | 説明 |
+|-----------|-------------|------|
+| `num_objects` | 5 | スポーンするキューブの数 |
+| `use_edge_detection` | true | エッジ検出を使用するか |
+| `max_iterations` | 10 | 最大イテレーション回数 |
+
+#### ロボット制御 (robot_controller.py)
+
+| パラメータ | 値 | 説明 |
+|-----------|-----|------|
+| `pick_z_above` | 0.20m | ホバー高さ |
+| `pick_z_lift` | 0.30m | 持ち上げ高さ |
+| `stabilize_wait` | 0.85秒 | 把持前待機時間 |
+
+### 動作フロー
+
+1. **初期化**: カメラデータ・サービス待機
+2. **スポーン**: 5個のキューブをランダム配置
+3. **スキャン**: カメラ姿勢で全キューブ検出
+4. **ピック＆プレース** (最大10イテレーション):
+   - ホバー位置へ移動
+   - グリッパーを開く
+   - ピック位置へ降下
+   - **0.85秒待機** (アーム安定化)
+   - グリッパーを閉じる
+   - 持ち上げ
+   - 配置場所へ移動
+   - グリッパーを開く
+5. **完了**: 全キューブ処理完了
+
+### ROS 2 サービス一覧
+
+| サービス名 | 型 | 説明 |
+|-----------|-----|------|
+| `/motion/move_to_camera_pose` | std_srvs/Trigger | カメラ観察姿勢へ移動 |
+| `/motion/open_gripper` | std_srvs/Trigger | グリッパーを開く |
+| `/motion/close_gripper` | std_srvs/Trigger | グリッパーを閉じる |
+| `/motion/execute_pose` | std_srvs/Trigger | 目標姿勢へ移動 |
+| `/motion/execute_cartesian` | std_srvs/Trigger | デカルト空間で移動 |
+
+目標姿勢は `/motion/target_pose` トピック (geometry_msgs/PoseStamped) で事前に設定します。
+
+---
 
 ## 関連ドキュメント
 
