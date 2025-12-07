@@ -79,7 +79,7 @@ ros2 run crane_x7_examples your_program
 ### ログレベルの変更
 
 ```bash
-ros2 launch crane_x7_examples banana.launch.py --log-level debug
+ros2 launch crane_x7_examples point_cloud_sorting.launch.py use_sim_time:=true --log-level debug
 ```
 
 ### 特定ノードのログを確認
@@ -126,6 +126,6 @@ crane_x7_banana/
 
 ## 関連ドキュメント
 
-- [実装詳細](implementation.md) - バナナデモの実装解説
+- [色分別デモ実装詳細](color-sorting-implementation.md) - point_cloud_sorting の実装解説
 - [Git運用ルール](git-workflow.md) - コミットメッセージとブランチ運用ルール
 - [トラブルシューティング](troubleshooting.md) - 問題解決

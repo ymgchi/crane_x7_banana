@@ -37,7 +37,8 @@
 - **フォーク元**: [NOPLAB/crane_x7_ros](https://github.com/NOPLAB/crane_x7_ros)
 - **大元のリポジトリ**: [rt-net/crane_x7_ros](https://github.com/rt-net/crane_x7_ros)
 - **カスタマイズ内容**:
-  - banana sorting demo を追加
+  - point_cloud_sorting demo を追加（メインデモ）
+  - motion_service_node（MoveIt サービスラッパー）を追加
 
 ### crane_x7_description パッケージ
 

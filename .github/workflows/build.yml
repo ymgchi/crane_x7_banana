@@ -34,7 +34,18 @@ jobs:
             ros-humble-image-geometry \
             ros-humble-tf2-ros \
             ros-humble-tf2-geometry-msgs \
+            ros-humble-tf2-eigen \
+            ros-humble-pcl-ros \
+            ros-humble-angles \
+            ros-humble-depth-image-proc \
+            ros-humble-xacro \
+            ros-humble-robot-state-publisher \
+            ros-humble-joint-state-publisher \
             libopencv-dev
+
+      - name: Install Python dependencies
+        run: |
+          pip3 install numpy open3d scikit-learn matplotlib
 
       - name: Install rosdep dependencies
         run: |
@@ -46,7 +57,7 @@ jobs:
         run: |
           . /opt/ros/humble/setup.sh
           cd ros2
-          colcon build --packages-select crane_x7_examples --cmake-args -DCMAKE_BUILD_TYPE=Release
+          colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
         env:
           MAKEFLAGS: "-j2"
 
@@ -64,6 +75,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -98,6 +111,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install clang-format
         run: |
