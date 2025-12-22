@@ -70,9 +70,15 @@ ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=true
 
 - 点群データを用いたエッジ検出による把持点推定にも取り組みましたが、カメラを真上から見下ろす角度ではエッジが検出されにくい課題があり、改善を検討中です
 
+## 謝辞
+
+このプロジェクトは [NOPLAB/crane_x7_vla](https://github.com/NOPLAB/crane_x7_vla) をベースにしています。
+- 元リポジトリ著作権: Copyright (c) 2025 nop (NOPLAB)
+- 元リポジトリライセンス: MIT License
+
 ## ライセンス
 
-- **このリポジトリ**: MIT License (Copyright (c) 2025 ymgchi)
+- **このリポジトリ**: Apache License 2.0 (Copyright (c) 2025 ymgchi)
 - **crane_x7_ros**: Apache License 2.0
 - **crane_x7_description**: NON-COMMERCIAL LICENSE
 
