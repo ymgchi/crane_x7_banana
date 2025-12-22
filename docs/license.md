@@ -37,7 +37,8 @@
 - **フォーク元**: [NOPLAB/crane_x7_ros](https://github.com/NOPLAB/crane_x7_ros)
 - **大元のリポジトリ**: [rt-net/crane_x7_ros](https://github.com/rt-net/crane_x7_ros)
 - **カスタマイズ内容**:
-  - point_cloud_sorting demo を追加（メインデモ）
+  - color_sorting demo を追加（メインデモ）
+  - point_cloud_sorting demo を追加（発展的な取り組み）
   - motion_service_node（MoveIt サービスラッパー）を追加
 
 ### crane_x7_description パッケージ
@@ -86,7 +87,7 @@
   - TF2 による座標変換
   - 複数物体の一括検出とバッチ処理
 
-#### point cloud sorting demo
+#### point cloud sorting demo（発展的な取り組み）
 
 - **著作権**: Copyright (c) 2025 ymgchi
 - **ライセンス**: Apache License 2.0
@@ -99,9 +100,9 @@
   - 関連する CMakeLists.txt、package.xml の変更
 - **特徴**:
   - Python + C++ 分離アーキテクチャ
-  - HSV 色検出 + エッジ検出
+  - HSV 色検出 + 点群エッジ検出
   - RViz 可視化対応
-  - ROS 2 サービスベースのロボット制御
+- **備考**: カメラ角度による検出精度の課題があり、今後の改善点
 
 ## ライセンス互換性
 

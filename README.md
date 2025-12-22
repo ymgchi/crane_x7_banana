@@ -10,19 +10,19 @@ https://github.com/user-attachments/assets/6d47b2b3-5b5c-4eec-bcbe-505cfa42c7e4
 
 ## 概要
 
-RealSenseカメラのRGB画像と点群データを使用して、青・黄・緑の3色のキューブを検出し、色ごとに異なる場所へ自動仕分けします。
+RealSenseカメラのRGB-D画像を使用して、オレンジ・黄・緑の3色のキューブを検出し、色ごとに異なる場所へ自動仕分けします。
 
-- **青色キューブ**: 右奥に配置
+- **オレンジ色キューブ**: 右奥に配置
 - **黄色キューブ**: 左奥に配置
 - **緑色キューブ**: 前方に配置
 
 ### 主な機能
 
 - RGB画像からHSV色空間による色検出
-- 点群データからエッジ検出による把持点の推定
-- RVizでの検出結果・点群のリアルタイム可視化
-- C++/Python分離アーキテクチャ（MoveItはC++、認識・制御ロジックはPython）
-- 5個のキューブをランダムな色で自動スポーン
+- 深度画像を用いた3次元位置推定
+- TF2による座標変換（カメラ座標系→ロボット座標系）
+- MoveItによるモーションプランニング
+- 5個のキューブをランダムな色で自動スポーン（シミュレーション）
 
 ## クイックスタート
 
@@ -39,7 +39,7 @@ docker compose --profile sim up
 # 別ターミナルでデモ実行
 docker exec -it ros-dev-banana /bin/bash
 source /opt/ros/humble/setup.bash && source /workspace/ros2/install/setup.bash
-ros2 launch crane_x7_examples point_cloud_sorting.launch.py use_sim_time:=true
+ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=true
 ```
 
 詳細は [セットアップガイド](docs/setup.md) を参照してください。
@@ -63,9 +63,12 @@ ros2 launch crane_x7_examples point_cloud_sorting.launch.py use_sim_time:=true
 - MoveIt (モーションプランニング)
 - Gazebo (物理シミュレーション)
 - OpenCV (色検出・画像処理)
-- Open3D (点群処理・エッジ検出)
-- RealSense D435 カメラ (RGB・深度センシング)
+- RealSense D435 カメラ (RGB-D センシング)
 - Docker (環境構築)
+
+## 今後の課題
+
+- 点群データを用いたエッジ検出による把持点推定にも取り組みましたが、カメラを真上から見下ろす角度ではエッジが検出されにくい課題があり、改善を検討中です
 
 ## ライセンス
 
