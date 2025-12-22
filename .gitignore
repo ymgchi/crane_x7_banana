@@ -45,3 +45,8 @@ dist/
 *.tmp
 *.bak
 *.cache
+
+# Private files (do not commit)
+CLAUDE.md
+AGENTS.md
+docs/presentation/
