@@ -6,7 +6,7 @@ CRANE-X7 ロボットアームを使用したビジョンベースのピック�
 
 ## デモ
 
-https://github.com/user-attachments/assets/6d47b2b3-5b5c-4eec-bcbe-505cfa42c7e4
+https://github.com/user-attachments/assets/500d9dcf-3de1-41a2-970f-4cded638cbf5
 
 ## 概要
 
@@ -32,14 +32,14 @@ git clone --recursive https://github.com/ymgchi/crane_x7_banana.git
 cd crane_x7_banana
 cp .env.template .env
 
-# シミュレーター起動
-xhost +
-docker compose --profile sim up
+# 実機起動
+sudo chmod 666 /dev/ttyUSB0
+docker compose --profile real up
 
 # 別ターミナルでデモ実行
 docker exec -it ros-dev-banana /bin/bash
 source /opt/ros/humble/setup.bash && source /workspace/ros2/install/setup.bash
-ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=true
+ros2 launch crane_x7_examples color_sorting.launch.py use_sim_time:=false
 ```
 
 詳細は [セットアップガイド](docs/setup.md) を参照してください。
